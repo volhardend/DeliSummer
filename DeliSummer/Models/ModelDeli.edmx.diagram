@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="cc68f734f6b140dd84700932f17cfb8b" Name="Diagram1">
+        <EntityTypeShape EntityType="DeliSummerDBModel.Almuerzo" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeliSummerDBModel.Boleta" Width="1.5" PointX="5.375" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeliSummerDBModel.Cena" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeliSummerDBModel.Cliente" Width="1.5" PointX="0.75" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeliSummerDBModel.Desayuno" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeliSummerDBModel.Pedido" Width="1.5" PointX="3" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeliSummerDBModel.PedidoAlmuerzo" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeliSummerDBModel.PedidoCena" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeliSummerDBModel.PedidoDesayuno" Width="1.5" PointX="8.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DeliSummerDBModel.sysdiagrams" Width="1.5" PointX="8.75" PointY="2.25" IsExpanded="true" />
+        <AssociationConnector Association="DeliSummerDBModel.FK_PedidoAlmuerzo_Almuerzo" ManuallyRouted="false" />
+        <AssociationConnector Association="DeliSummerDBModel.FK_Boleta_Pedido" ManuallyRouted="false" />
+        <AssociationConnector Association="DeliSummerDBModel.FK_PedidoCena_Cena" ManuallyRouted="false" />
+        <AssociationConnector Association="DeliSummerDBModel.FK_Pedido_Cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="DeliSummerDBModel.FK_PedidoDesayuno_Desayuno1" ManuallyRouted="false" />
+        <AssociationConnector Association="DeliSummerDBModel.FK_PedidoAlmuerzo_Pedido" ManuallyRouted="false" />
+        <AssociationConnector Association="DeliSummerDBModel.FK_PedidoCena_Pedido" ManuallyRouted="false" />
+        <AssociationConnector Association="DeliSummerDBModel.FK_PedidoDesayuno_Pedido1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

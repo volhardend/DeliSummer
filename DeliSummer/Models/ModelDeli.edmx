@@ -1,0 +1,637 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DeliSummerDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Almuerzo">
+          <Key>
+            <PropertyRef Name="id_almuerzo" />
+          </Key>
+          <Property Name="id_almuerzo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_almuerzo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="precio_almuerzo" Type="int" Nullable="false" />
+          <Property Name="descripcion_almuerzo" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="imagen_almuerzo" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Boleta">
+          <Key>
+            <PropertyRef Name="id_boleta" />
+          </Key>
+          <Property Name="id_boleta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_pedido" Type="int" Nullable="false" />
+          <Property Name="fecha_pedido" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cena">
+          <Key>
+            <PropertyRef Name="id_cena" />
+          </Key>
+          <Property Name="id_cena" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_cena" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="precio_cena" Type="int" Nullable="false" />
+          <Property Name="descripcion_cena" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="imagen_cena" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id_cliente" />
+          </Key>
+          <Property Name="id_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_cliente" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="direccion_cliente" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Desayuno">
+          <Key>
+            <PropertyRef Name="id_desayuno" />
+          </Key>
+          <Property Name="id_desayuno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_desayuno" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="precio_desayuno" Type="int" Nullable="false" />
+          <Property Name="descripcion_desayuno" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="imagen_desayuno" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="id_pedido" />
+          </Key>
+          <Property Name="id_pedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="precio_total" Type="int" Nullable="false" />
+          <Property Name="id_cliente" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PedidoAlmuerzo">
+          <Key>
+            <PropertyRef Name="id_pedido_almuerzo" />
+          </Key>
+          <Property Name="id_pedido_almuerzo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_almuerzo" Type="int" Nullable="false" />
+          <Property Name="id_pedido" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PedidoCena">
+          <Key>
+            <PropertyRef Name="id_pedido_cena" />
+          </Key>
+          <Property Name="id_pedido_cena" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_pedido" Type="int" Nullable="false" />
+          <Property Name="id_cena" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PedidoDesayuno">
+          <Key>
+            <PropertyRef Name="id_pedido_desayuno" />
+          </Key>
+          <Property Name="id_pedido_desayuno" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_desayuno" Type="int" Nullable="false" />
+          <Property Name="id_pedido" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <Association Name="FK_Boleta_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="Boleta" Type="Self.Boleta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="id_pedido" />
+            </Principal>
+            <Dependent Role="Boleta">
+              <PropertyRef Name="id_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoAlmuerzo_Almuerzo">
+          <End Role="Almuerzo" Type="Self.Almuerzo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoAlmuerzo" Type="Self.PedidoAlmuerzo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almuerzo">
+              <PropertyRef Name="id_almuerzo" />
+            </Principal>
+            <Dependent Role="PedidoAlmuerzo">
+              <PropertyRef Name="id_almuerzo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoAlmuerzo_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoAlmuerzo" Type="Self.PedidoAlmuerzo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="id_pedido" />
+            </Principal>
+            <Dependent Role="PedidoAlmuerzo">
+              <PropertyRef Name="id_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoCena_Cena">
+          <End Role="Cena" Type="Self.Cena" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoCena" Type="Self.PedidoCena" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cena">
+              <PropertyRef Name="id_cena" />
+            </Principal>
+            <Dependent Role="PedidoCena">
+              <PropertyRef Name="id_cena" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoCena_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoCena" Type="Self.PedidoCena" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="id_pedido" />
+            </Principal>
+            <Dependent Role="PedidoCena">
+              <PropertyRef Name="id_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoDesayuno_Desayuno1">
+          <End Role="Desayuno" Type="Self.Desayuno" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoDesayuno" Type="Self.PedidoDesayuno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Desayuno">
+              <PropertyRef Name="id_desayuno" />
+            </Principal>
+            <Dependent Role="PedidoDesayuno">
+              <PropertyRef Name="id_desayuno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoDesayuno_Pedido1">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoDesayuno" Type="Self.PedidoDesayuno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="id_pedido" />
+            </Principal>
+            <Dependent Role="PedidoDesayuno">
+              <PropertyRef Name="id_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DeliSummerDBModelStoreContainer">
+          <EntitySet Name="Almuerzo" EntityType="Self.Almuerzo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Boleta" EntityType="Self.Boleta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cena" EntityType="Self.Cena" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Desayuno" EntityType="Self.Desayuno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PedidoAlmuerzo" EntityType="Self.PedidoAlmuerzo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PedidoCena" EntityType="Self.PedidoCena" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PedidoDesayuno" EntityType="Self.PedidoDesayuno" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Boleta_Pedido" Association="Self.FK_Boleta_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="Boleta" EntitySet="Boleta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Cliente" Association="Self.FK_Pedido_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoAlmuerzo_Almuerzo" Association="Self.FK_PedidoAlmuerzo_Almuerzo">
+            <End Role="Almuerzo" EntitySet="Almuerzo" />
+            <End Role="PedidoAlmuerzo" EntitySet="PedidoAlmuerzo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoAlmuerzo_Pedido" Association="Self.FK_PedidoAlmuerzo_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoAlmuerzo" EntitySet="PedidoAlmuerzo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoCena_Cena" Association="Self.FK_PedidoCena_Cena">
+            <End Role="Cena" EntitySet="Cena" />
+            <End Role="PedidoCena" EntitySet="PedidoCena" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoCena_Pedido" Association="Self.FK_PedidoCena_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoCena" EntitySet="PedidoCena" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoDesayuno_Desayuno1" Association="Self.FK_PedidoDesayuno_Desayuno1">
+            <End Role="Desayuno" EntitySet="Desayuno" />
+            <End Role="PedidoDesayuno" EntitySet="PedidoDesayuno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoDesayuno_Pedido1" Association="Self.FK_PedidoDesayuno_Pedido1">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoDesayuno" EntitySet="PedidoDesayuno" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DeliSummerDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Almuerzo">
+          <Key>
+            <PropertyRef Name="id_almuerzo" />
+          </Key>
+          <Property Name="id_almuerzo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_almuerzo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio_almuerzo" Type="Int32" Nullable="false" />
+          <Property Name="descripcion_almuerzo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="imagen_almuerzo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PedidoAlmuerzo" Relationship="Self.FK_PedidoAlmuerzo_Almuerzo" FromRole="Almuerzo" ToRole="PedidoAlmuerzo" />
+        </EntityType>
+        <EntityType Name="Boleta">
+          <Key>
+            <PropertyRef Name="id_boleta" />
+          </Key>
+          <Property Name="id_boleta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_pedido" Type="Int32" Nullable="false" />
+          <Property Name="fecha_pedido" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_Boleta_Pedido" FromRole="Boleta" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Cena">
+          <Key>
+            <PropertyRef Name="id_cena" />
+          </Key>
+          <Property Name="id_cena" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_cena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio_cena" Type="Int32" Nullable="false" />
+          <Property Name="descripcion_cena" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="imagen_cena" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PedidoCena" Relationship="Self.FK_PedidoCena_Cena" FromRole="Cena" ToRole="PedidoCena" />
+        </EntityType>
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id_cliente" />
+          </Key>
+          <Property Name="id_cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_cliente" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="direccion_cliente" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_Pedido_Cliente" FromRole="Cliente" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="Desayuno">
+          <Key>
+            <PropertyRef Name="id_desayuno" />
+          </Key>
+          <Property Name="id_desayuno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_desayuno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="precio_desayuno" Type="Int32" Nullable="false" />
+          <Property Name="descripcion_desayuno" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="imagen_desayuno" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="PedidoDesayuno" Relationship="Self.FK_PedidoDesayuno_Desayuno1" FromRole="Desayuno" ToRole="PedidoDesayuno" />
+        </EntityType>
+        <EntityType Name="Pedido">
+          <Key>
+            <PropertyRef Name="id_pedido" />
+          </Key>
+          <Property Name="id_pedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="precio_total" Type="Int32" Nullable="false" />
+          <Property Name="id_cliente" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Boleta" Relationship="Self.FK_Boleta_Pedido" FromRole="Pedido" ToRole="Boleta" />
+          <NavigationProperty Name="Cliente" Relationship="Self.FK_Pedido_Cliente" FromRole="Pedido" ToRole="Cliente" />
+          <NavigationProperty Name="PedidoAlmuerzo" Relationship="Self.FK_PedidoAlmuerzo_Pedido" FromRole="Pedido" ToRole="PedidoAlmuerzo" />
+          <NavigationProperty Name="PedidoCena" Relationship="Self.FK_PedidoCena_Pedido" FromRole="Pedido" ToRole="PedidoCena" />
+          <NavigationProperty Name="PedidoDesayuno" Relationship="Self.FK_PedidoDesayuno_Pedido1" FromRole="Pedido" ToRole="PedidoDesayuno" />
+        </EntityType>
+        <EntityType Name="PedidoAlmuerzo">
+          <Key>
+            <PropertyRef Name="id_pedido_almuerzo" />
+          </Key>
+          <Property Name="id_pedido_almuerzo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_almuerzo" Type="Int32" Nullable="false" />
+          <Property Name="id_pedido" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Almuerzo" Relationship="Self.FK_PedidoAlmuerzo_Almuerzo" FromRole="PedidoAlmuerzo" ToRole="Almuerzo" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_PedidoAlmuerzo_Pedido" FromRole="PedidoAlmuerzo" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="PedidoCena">
+          <Key>
+            <PropertyRef Name="id_pedido_cena" />
+          </Key>
+          <Property Name="id_pedido_cena" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_pedido" Type="Int32" Nullable="false" />
+          <Property Name="id_cena" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Cena" Relationship="Self.FK_PedidoCena_Cena" FromRole="PedidoCena" ToRole="Cena" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_PedidoCena_Pedido" FromRole="PedidoCena" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="PedidoDesayuno">
+          <Key>
+            <PropertyRef Name="id_pedido_desayuno" />
+          </Key>
+          <Property Name="id_pedido_desayuno" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_desayuno" Type="Int32" Nullable="false" />
+          <Property Name="id_pedido" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Desayuno" Relationship="Self.FK_PedidoDesayuno_Desayuno1" FromRole="PedidoDesayuno" ToRole="Desayuno" />
+          <NavigationProperty Name="Pedido" Relationship="Self.FK_PedidoDesayuno_Pedido1" FromRole="PedidoDesayuno" ToRole="Pedido" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_PedidoAlmuerzo_Almuerzo">
+          <End Role="Almuerzo" Type="Self.Almuerzo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoAlmuerzo" Type="Self.PedidoAlmuerzo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almuerzo">
+              <PropertyRef Name="id_almuerzo" />
+            </Principal>
+            <Dependent Role="PedidoAlmuerzo">
+              <PropertyRef Name="id_almuerzo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Boleta_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1" />
+          <End Role="Boleta" Type="Self.Boleta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="id_pedido" />
+            </Principal>
+            <Dependent Role="Boleta">
+              <PropertyRef Name="id_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoCena_Cena">
+          <End Role="Cena" Type="Self.Cena" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoCena" Type="Self.PedidoCena" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cena">
+              <PropertyRef Name="id_cena" />
+            </Principal>
+            <Dependent Role="PedidoCena">
+              <PropertyRef Name="id_cena" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pedido_Cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1" />
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id_cliente" />
+            </Principal>
+            <Dependent Role="Pedido">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoDesayuno_Desayuno1">
+          <End Role="Desayuno" Type="Self.Desayuno" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoDesayuno" Type="Self.PedidoDesayuno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Desayuno">
+              <PropertyRef Name="id_desayuno" />
+            </Principal>
+            <Dependent Role="PedidoDesayuno">
+              <PropertyRef Name="id_desayuno" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoAlmuerzo_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoAlmuerzo" Type="Self.PedidoAlmuerzo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="id_pedido" />
+            </Principal>
+            <Dependent Role="PedidoAlmuerzo">
+              <PropertyRef Name="id_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoCena_Pedido">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoCena" Type="Self.PedidoCena" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="id_pedido" />
+            </Principal>
+            <Dependent Role="PedidoCena">
+              <PropertyRef Name="id_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PedidoDesayuno_Pedido1">
+          <End Role="Pedido" Type="Self.Pedido" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PedidoDesayuno" Type="Self.PedidoDesayuno" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pedido">
+              <PropertyRef Name="id_pedido" />
+            </Principal>
+            <Dependent Role="PedidoDesayuno">
+              <PropertyRef Name="id_pedido" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DeliSummerDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Almuerzo" EntityType="Self.Almuerzo" />
+          <EntitySet Name="Boleta" EntityType="Self.Boleta" />
+          <EntitySet Name="Cena" EntityType="Self.Cena" />
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Desayuno" EntityType="Self.Desayuno" />
+          <EntitySet Name="Pedido" EntityType="Self.Pedido" />
+          <EntitySet Name="PedidoAlmuerzo" EntityType="Self.PedidoAlmuerzo" />
+          <EntitySet Name="PedidoCena" EntityType="Self.PedidoCena" />
+          <EntitySet Name="PedidoDesayuno" EntityType="Self.PedidoDesayuno" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_PedidoAlmuerzo_Almuerzo" Association="Self.FK_PedidoAlmuerzo_Almuerzo">
+            <End Role="Almuerzo" EntitySet="Almuerzo" />
+            <End Role="PedidoAlmuerzo" EntitySet="PedidoAlmuerzo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Boleta_Pedido" Association="Self.FK_Boleta_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="Boleta" EntitySet="Boleta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoCena_Cena" Association="Self.FK_PedidoCena_Cena">
+            <End Role="Cena" EntitySet="Cena" />
+            <End Role="PedidoCena" EntitySet="PedidoCena" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pedido_Cliente" Association="Self.FK_Pedido_Cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Pedido" EntitySet="Pedido" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoDesayuno_Desayuno1" Association="Self.FK_PedidoDesayuno_Desayuno1">
+            <End Role="Desayuno" EntitySet="Desayuno" />
+            <End Role="PedidoDesayuno" EntitySet="PedidoDesayuno" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoAlmuerzo_Pedido" Association="Self.FK_PedidoAlmuerzo_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoAlmuerzo" EntitySet="PedidoAlmuerzo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoCena_Pedido" Association="Self.FK_PedidoCena_Pedido">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoCena" EntitySet="PedidoCena" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PedidoDesayuno_Pedido1" Association="Self.FK_PedidoDesayuno_Pedido1">
+            <End Role="Pedido" EntitySet="Pedido" />
+            <End Role="PedidoDesayuno" EntitySet="PedidoDesayuno" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DeliSummerDBModelStoreContainer" CdmEntityContainer="DeliSummerDBEntities">
+          <EntitySetMapping Name="Almuerzo">
+            <EntityTypeMapping TypeName="DeliSummerDBModel.Almuerzo">
+              <MappingFragment StoreEntitySet="Almuerzo">
+                <ScalarProperty Name="id_almuerzo" ColumnName="id_almuerzo" />
+                <ScalarProperty Name="nombre_almuerzo" ColumnName="nombre_almuerzo" />
+                <ScalarProperty Name="precio_almuerzo" ColumnName="precio_almuerzo" />
+                <ScalarProperty Name="descripcion_almuerzo" ColumnName="descripcion_almuerzo" />
+                <ScalarProperty Name="imagen_almuerzo" ColumnName="imagen_almuerzo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Boleta">
+            <EntityTypeMapping TypeName="DeliSummerDBModel.Boleta">
+              <MappingFragment StoreEntitySet="Boleta">
+                <ScalarProperty Name="id_boleta" ColumnName="id_boleta" />
+                <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
+                <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cena">
+            <EntityTypeMapping TypeName="DeliSummerDBModel.Cena">
+              <MappingFragment StoreEntitySet="Cena">
+                <ScalarProperty Name="id_cena" ColumnName="id_cena" />
+                <ScalarProperty Name="nombre_cena" ColumnName="nombre_cena" />
+                <ScalarProperty Name="precio_cena" ColumnName="precio_cena" />
+                <ScalarProperty Name="descripcion_cena" ColumnName="descripcion_cena" />
+                <ScalarProperty Name="imagen_cena" ColumnName="imagen_cena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="DeliSummerDBModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+                <ScalarProperty Name="nombre_cliente" ColumnName="nombre_cliente" />
+                <ScalarProperty Name="direccion_cliente" ColumnName="direccion_cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Desayuno">
+            <EntityTypeMapping TypeName="DeliSummerDBModel.Desayuno">
+              <MappingFragment StoreEntitySet="Desayuno">
+                <ScalarProperty Name="id_desayuno" ColumnName="id_desayuno" />
+                <ScalarProperty Name="nombre_desayuno" ColumnName="nombre_desayuno" />
+                <ScalarProperty Name="precio_desayuno" ColumnName="precio_desayuno" />
+                <ScalarProperty Name="descripcion_desayuno" ColumnName="descripcion_desayuno" />
+                <ScalarProperty Name="imagen_desayuno" ColumnName="imagen_desayuno" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pedido">
+            <EntityTypeMapping TypeName="DeliSummerDBModel.Pedido">
+              <MappingFragment StoreEntitySet="Pedido">
+                <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
+                <ScalarProperty Name="precio_total" ColumnName="precio_total" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidoAlmuerzo">
+            <EntityTypeMapping TypeName="DeliSummerDBModel.PedidoAlmuerzo">
+              <MappingFragment StoreEntitySet="PedidoAlmuerzo">
+                <ScalarProperty Name="id_pedido_almuerzo" ColumnName="id_pedido_almuerzo" />
+                <ScalarProperty Name="id_almuerzo" ColumnName="id_almuerzo" />
+                <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidoCena">
+            <EntityTypeMapping TypeName="DeliSummerDBModel.PedidoCena">
+              <MappingFragment StoreEntitySet="PedidoCena">
+                <ScalarProperty Name="id_pedido_cena" ColumnName="id_pedido_cena" />
+                <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
+                <ScalarProperty Name="id_cena" ColumnName="id_cena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PedidoDesayuno">
+            <EntityTypeMapping TypeName="DeliSummerDBModel.PedidoDesayuno">
+              <MappingFragment StoreEntitySet="PedidoDesayuno">
+                <ScalarProperty Name="id_pedido_desayuno" ColumnName="id_pedido_desayuno" />
+                <ScalarProperty Name="id_desayuno" ColumnName="id_desayuno" />
+                <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DeliSummerDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+        <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
